@@ -4,9 +4,9 @@ build
 
 !gradle-wrapper.jar
 
-.idea
+.ideas
 
-*.iml
+EffectsLib.iml
 
 gradle.properties
 
