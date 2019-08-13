@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'signing'
+
+group = 'fr.cleymax'
+version = '1.0.0'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+javadoc {
+    options.links(
+            'https://hub.spigotmc.org/javadocs/spigot/',
+            'https://docs.oracle.com/javase/8/docs/api/'
+    )
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('windowtitle', 'EffectsLib | JavaDoc')
+}
+
+signing {
+    sign configurations.archives
+}

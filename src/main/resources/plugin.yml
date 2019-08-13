@@ -1,0 +1,6 @@
+name: EffectsLib
+version: @version@
+main: fr.cleymax.effectslib.EffectsLib
+authors: [Cleymax]
+description: Plugin for summon effect of particles in the world
+website: https://cleymax.fr/
